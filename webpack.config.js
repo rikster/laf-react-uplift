@@ -31,4 +31,5 @@ module.exports = {
       title: "LAF App",
     }),
   ],
+  devtool: "source-map",
 };
