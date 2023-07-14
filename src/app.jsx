@@ -93,29 +93,35 @@ function App() {
 
   function agentResultsService(sizePreference, attributePreference, callback) {
     setTimeout(() => {
+      const matchingAgents = []; // create a temp array to hold the matching agents
       for (let i = 0; i < agents.length; i++) {
         const agent = agents[i];
         if (
           agent.businessSize === sizePreference &&
           agent[attributePreference] >= 5
         ) {
-          callback(null, agent);
-          return;
+          matchingAgents.push(agent); // push the agent to the temp array
         }
       }
-      callback(new Error("No matching agent found"));
+      // return the matching agents, if any
+      if (matchingAgents.length > 0) {
+        callback(null, matchingAgents);
+      } else {
+        // return an error if no matching agents were found
+        callback(new Error("No matching agent found"));
+      }
     }, 2000);
   }
 
   function handleMatch() {
     const sizePreference = answers[1] && answers[1].value;
     const attributePreference = answers[2] && answers[2].attr;
-
     agentResultsService(sizePreference, attributePreference, (err, matched) => {
       if (err) {
+        // console any error if no matching agents were found
         console.error("An error occurred:", err);
       } else {
-        setMatchedAgents([matched]); // bring into execution scope
+        setMatchedAgents(matched); // set the matched agents to the state
       }
     });
   }

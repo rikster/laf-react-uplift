@@ -1,5 +1,4 @@
-
-# Local Agent Finder - Coding Exercise 
+# Local Agent Finder - Coding Exercise
 
 Welcome to our coding exercise! This test is designed to understand your thought process, problem-solving approach, and ability to provide improvement recommendations. We view this exercise as a way for you to express your technical and creative skills.
 
@@ -19,8 +18,17 @@ In this part, we've provided a code snippet which you're encouraged to improve a
 Remember, this part is not a test to assess whether you can merely fix the code, but an opportunity to demonstrate how you would improve it, considering modern frameworks and best engineering practices.
 
 ## Application Architecture Analysis
+
 For this component we've provided a [high level explanation and diagram](architecture.md) of how some applications are currently being built and deployed. We're interested in your insights and suggestions for improving our Front End architecture, along with our build and deployment practices.
 
 Feel free to summarize your thoughts or even provide your own diagram. You can put your response or new diagram in the repo, under the `Docs` folder.
 
 We're eager to see your unique perspective on potential improvements. Good luck, and we look forward to reviewing your exercise!
+
+# Submission notes
+
+1. Added source mapping to enable debugging
+2. Added to Linting to help start re-factoring
+3. Reordered functions so they are declared before called
+4. Fixed Callback error in agentResultsService()
+   1. Included all matches in collection - no just 1st
