@@ -1,87 +1,17 @@
 /* eslint-disable no-plusplus */
-import React, { useState } from "react";
-
-const questions = [
-  {
-    id: 1,
-    text: "What size of business do you prefer?",
-    options: [
-      { id: 1, text: "Small operation", value: 10 },
-      { id: 2, text: "Medium boutique operations", value: 20 },
-      { id: 3, text: "Big enterprise", value: 30 },
-    ],
-  },
-  {
-    id: 2,
-    text: "What is your top preference in an agent?",
-    options: [
-      { id: 1, text: "Local knowledge", attr: "localKnowledge" },
-      { id: 2, text: "Best outcome", attr: "bestOutcome" },
-      {
-        id: 3,
-        text: "Patience and understanding",
-        attr: "patienceUnderstanding",
-      },
-      {
-        id: 4,
-        text: "Trustworthiness and reliability",
-        attr: "trustworthinessReliability",
-      },
-    ],
-  },
-];
-
-const agents = [
-  {
-    id: 1,
-    name: "John Smith",
-    localKnowledge: 8,
-    bestOutcome: 9,
-    patienceUnderstanding: 7,
-    trustworthinessReliability: 8,
-    businessSize: 10,
-  },
-  {
-    id: 2,
-    name: "Jane Doe",
-    localKnowledge: 7,
-    bestOutcome: 8,
-    patienceUnderstanding: 8,
-    trustworthinessReliability: 7,
-    businessSize: 20,
-  },
-  {
-    id: 3,
-    name: "Bob Johnson",
-    localKnowledge: 9,
-    bestOutcome: 10,
-    patienceUnderstanding: 8,
-    trustworthinessReliability: 9,
-    businessSize: 30,
-  },
-  {
-    id: 4,
-    name: "Mike Williams",
-    localKnowledge: 6,
-    bestOutcome: 7,
-    patienceUnderstanding: 7,
-    trustworthinessReliability: 6,
-    businessSize: 20,
-  },
-  {
-    id: 5,
-    name: "Emma Johnson",
-    localKnowledge: 10,
-    bestOutcome: 9,
-    patienceUnderstanding: 10,
-    trustworthinessReliability: 10,
-    businessSize: 10,
-  },
-];
+import React, { useState, useEffect  } from "react";
+import AgentService from "./services/agentService";
+import QuestionService from "./services/questionService";
 
 function App() {
   const [answers, setAnswers] = useState({});
   const [matchedAgents, setMatchedAgents] = useState([]);
+  const [questions, setQuestions] = useState([]);
+
+  // On component mount, get questions
+  useEffect(() => {
+    setQuestions(QuestionService.getQuestions());
+  }, []);
 
   function handleAnswer(questionId, option) {
     setAnswers((prevAnswers) => {
@@ -91,39 +21,17 @@ function App() {
     });
   }
 
-  function agentResultsService(sizePreference, attributePreference, callback) {
-    setTimeout(() => {
-      const matchingAgents = []; // create a temp array to hold the matching agents
-      for (let i = 0; i < agents.length; i++) {
-        const agent = agents[i];
-        if (
-          agent.businessSize === sizePreference &&
-          agent[attributePreference] >= 5
-        ) {
-          matchingAgents.push(agent); // push the agent to the temp array
-        }
-      }
-      // return the matching agents, if any
-      if (matchingAgents.length > 0) {
-        callback(null, matchingAgents);
-      } else {
-        // return an error if no matching agents were found
-        callback(new Error("No matching agent found"));
-      }
-    }, 2000);
-  }
-
   function handleMatch() {
     const sizePreference = answers[1] && answers[1].value;
     const attributePreference = answers[2] && answers[2].attr;
-    agentResultsService(sizePreference, attributePreference, (err, matched) => {
-      if (err) {
-        // console any error if no matching agents were found
+
+    AgentService.findAgents(sizePreference, attributePreference)
+      .then((matched) => {
+        setMatchedAgents(matched);
+      })
+      .catch((err) => {
         console.error("An error occurred:", err);
-      } else {
-        setMatchedAgents(matched); // set the matched agents to the state
-      }
-    });
+      });
   }
 
   return (

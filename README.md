@@ -32,3 +32,7 @@ We're eager to see your unique perspective on potential improvements. Good luck,
 3. Reordered functions so they are declared before called
 4. Fixed Callback error in agentResultsService()
    1. Included all matches in collection - no just 1st
+5. Separate handling of data into a utility services
+   1. Can be used elsewhere
+   2. Classes offer a good way (via oop - ES6) to encapsulate data and methods
+   3. Can be instantiated, therefore easier to tes
