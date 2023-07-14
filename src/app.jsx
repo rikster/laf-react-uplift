@@ -107,7 +107,6 @@ function App() {
     }, 2000);
   }
 
-
   function handleMatch() {
     const sizePreference = answers[1] && answers[1].value;
     const attributePreference = answers[2] && answers[2].attr;
@@ -115,11 +114,10 @@ function App() {
     agentResultsService(sizePreference, attributePreference, (err, matched) => {
       if (err) {
         console.error("An error occurred:", err);
+      } else {
+        setMatchedAgents([matched]); // bring into execution scope
       }
     });
-
-    // 'matched' is undefined here because agentResultsService is async (setTimeout)
-    setMatchedAgents([matched]);
   }
 
   return (
