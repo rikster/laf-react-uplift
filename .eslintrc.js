@@ -11,6 +11,13 @@ module.exports = {
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
     quotes: ["error", "double"],
     "linebreak-style": "off",
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        controlComponents: ["input"],
+        depth: 3,
+      },
+    ],
     // add more custom rules here
   },
   settings: {

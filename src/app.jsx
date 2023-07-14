@@ -1,6 +1,7 @@
+/* eslint-disable no-plusplus */
 import React, { useState } from "react";
 
-var questions = [
+const questions = [
   {
     id: 1,
     text: "What size of business do you prefer?",
@@ -79,40 +80,21 @@ const agents = [
 ];
 
 function App() {
-  var [answers, setAnswers] = useState({});
-  var [matchedAgents, setMatchedAgents] = useState([]);
+  const [answers, setAnswers] = useState({});
+  const [matchedAgents, setMatchedAgents] = useState([]);
 
   function handleAnswer(questionId, option) {
-    setAnswers(function (prevAnswers) {
-      var newAnswers = { ...prevAnswers };
+    setAnswers((prevAnswers) => {
+      const newAnswers = { ...prevAnswers };
       newAnswers[questionId] = option;
       return newAnswers;
     });
   }
 
-  function handleMatch() {
-    var sizePreference = answers[1] && answers[1].value;
-    var attributePreference = answers[2] && answers[2].attr;
-    console.log("sizePreference", sizePreference);
-    console.log("attributePreference", attributePreference);
-
-    agentResultsService(
-      sizePreference,
-      attributePreference,
-      function (err, matched) {
-        if (err) {
-          console.error("An error occurred:", err);
-        }
-      }
-    );
-
-    setMatchedAgents([matched]);
-  }
-
   function agentResultsService(sizePreference, attributePreference, callback) {
-    setTimeout(function () {
-      for (var i = 0; i < agents.length; i++) {
-        var agent = agents[i];
+    setTimeout(() => {
+      for (let i = 0; i < agents.length; i++) {
+        const agent = agents[i];
         if (
           agent.businessSize === sizePreference &&
           agent[attributePreference] >= 5
@@ -125,41 +107,52 @@ function App() {
     }, 2000);
   }
 
+
+  function handleMatch() {
+    const sizePreference = answers[1] && answers[1].value;
+    const attributePreference = answers[2] && answers[2].attr;
+
+    agentResultsService(sizePreference, attributePreference, (err, matched) => {
+      if (err) {
+        console.error("An error occurred:", err);
+      }
+    });
+
+    // 'matched' is undefined here because agentResultsService is async (setTimeout)
+    setMatchedAgents([matched]);
+  }
+
   return (
     <div>
       <h1>Find Your Agent</h1>
-      {questions.map(function (question) {
-        return (
-          <div key={question.id}>
-            <h2>{question.text}</h2>
-            {question.options.map(function (option) {
-              return (
-                <div key={option.id}>
-                  <label>
-                    <input
-                      type="radio"
-                      name={`question-${question.id}`}
-                      value={option.id}
-                      onChange={function () {
-                        handleAnswer(question.id, option);
-                      }}
-                    />
-                    {option.text}
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
-      <button onClick={handleMatch}>Find My Agent</button>
+      {questions.map((question) => (
+        <div key={question.id}>
+          <h2>{question.text}</h2>
+          {question.options.map((option) => (
+            <div key={option.id}>
+              <label>
+                <input
+                  type="radio"
+                  name={`question-${question.id}`}
+                  value={option.id}
+                  onChange={() => handleAnswer(question.id, option)}
+                />
+                {option.text}
+              </label>
+            </div>
+          ))}
+        </div>
+      ))}
+      <button type="button" onClick={handleMatch}>
+        Find My Agent
+      </button>
       {matchedAgents.length > 0 && (
         <div>
           <h2>Matched Agents:</h2>
           <ul>
-            {matchedAgents.map(function (agent) {
-              return <li key={agent.id}>{agent.name}</li>;
-            })}
+            {matchedAgents.map((agent) => (
+              <li key={agent.id}>{agent.name}</li>
+            ))}
           </ul>
         </div>
       )}
