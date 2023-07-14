@@ -1,6 +1,7 @@
 // classes introduce oop, could also be functions
 // classes can be instantiated, functions cannot, easier to test
 class QuestionService {
+  // this could be a network request, but for now it's just a static array
   questions = [
     {
       id: 1,
