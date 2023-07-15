@@ -37,8 +37,27 @@ We're eager to see your unique perspective on potential improvements. Good luck,
    1. Used classes, which offer a good way (via oop - ES6) to encapsulate data and methods
    2. Instances can be used elsewhere
    3. Often, easier to test
-6. Separate data
-7. Form Validation
-8. Error Boundary
+   4. These could end up in Microservices in Serverless environment
+6. Separate data - agentsData & questionsData
+   1. Could come from API/Database
+7. Error Handling and Input Validation
+   1. Remove console based error to user friendly msg
+      1. You could put in an Error Boundary?
+   2. Add a Loading msg to Button
+   3. Show error if Nothing is selected
+   4. As the app scales and forms get complex you might wan to use a 3rd part library
+      1. Formik - form state management, validation, and error handling.
+      2. Yup - value parsing and validation (pairs w/ Formik well)
+      3. React Hook Form - custom React hooks for managing form state and validating
+      4. etc
+8. Multi select 'preferences'
+   1. Checkbox List
 9. State management
-10. Styling
+10. Redux?
+11. Styling
+    1. CSS Tailwind
+12. Testing
+    1. Unit
+    2. Integration
+    3. e2e
+13. Warning: ReactDOM.render is no longer supported in React 18.
