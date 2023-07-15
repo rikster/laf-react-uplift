@@ -25,14 +25,20 @@ Feel free to summarize your thoughts or even provide your own diagram. You can p
 
 We're eager to see your unique perspective on potential improvements. Good luck, and we look forward to reviewing your exercise!
 
-# Submission notes
+# Notes
 
 1. Added source mapping to enable debugging
 2. Added to Linting to help start re-factoring
 3. Reordered functions so they are declared before called
+   1. Readability
 4. Fixed Callback error in agentResultsService()
    1. Included all matches in collection - no just 1st
-5. Separate handling of data into a utility services
-   1. Can be used elsewhere
-   2. Classes offer a good way (via oop - ES6) to encapsulate data and methods
-   3. Can be instantiated, therefore easier to tes
+5. Separate handling of data into a utility services (agentService and questionService)
+   1. Used classes, which offer a good way (via oop - ES6) to encapsulate data and methods
+   2. Instances can be used elsewhere
+   3. Often, easier to test
+6. Separate data
+7. Form Validation
+8. Error Boundary
+9. State management
+10. Styling
