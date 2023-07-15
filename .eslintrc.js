@@ -18,11 +18,12 @@ module.exports = {
         depth: 3,
       },
     ],
+    "comma-dangle": ["error", "always-multiline"],
     // add more custom rules here
   },
   settings: {
     react: {
-      version: "detect", // automatically picks the version you have installed.
+      version: "detect", // detect React version
     },
   },
 };

@@ -9,11 +9,16 @@ function App() {
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isValid, setIsValid] = useState(false);
 
-  // On component mount, get questions
+  // On component mount, get questions, and check if answered
   useEffect(() => {
     setQuestions(QuestionService.getQuestions());
-  }, []);
+    const allQuestionsAnswered = questions.every(
+      (question) => answers[question.id]
+    );
+    setIsValid(allQuestionsAnswered);
+  }, [answers, questions]);
 
   function handleAnswer(questionId, option) {
     setAnswers((prevAnswers) => {
@@ -61,7 +66,13 @@ function App() {
           ))}
         </div>
       ))}
-      <button type="button" onClick={handleMatch} disabled={isLoading}>
+      <hr />
+      {!isValid && <p>Please answer questions before proceeding.</p>}
+      <button
+        type="button"
+        onClick={handleMatch}
+        disabled={!isValid || isLoading}
+      >
         {isLoading ? "Loading..." : "Find My Agent"}
       </button>
       {error && (
