@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import AgentService from "./services/agentService";
 import QuestionService from "./services/questionService";
 
@@ -7,6 +7,8 @@ function App() {
   const [answers, setAnswers] = useState({});
   const [matchedAgents, setMatchedAgents] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // On component mount, get questions
   useEffect(() => {
@@ -25,12 +27,16 @@ function App() {
     const sizePreference = answers[1] && answers[1].value;
     const attributePreference = answers[2] && answers[2].attr;
 
+    setIsLoading(true);
     AgentService.findAgents(sizePreference, attributePreference)
       .then((matched) => {
         setMatchedAgents(matched);
+        setError(null);
+        setIsLoading(false);
       })
       .catch((err) => {
-        console.error("An error occurred:", err);
+        setError(err.message);
+        setIsLoading(false);
       });
   }
 
@@ -55,9 +61,15 @@ function App() {
           ))}
         </div>
       ))}
-      <button type="button" onClick={handleMatch}>
-        Find My Agent
+      <button type="button" onClick={handleMatch} disabled={isLoading}>
+        {isLoading ? "Loading..." : "Find My Agent"}
       </button>
+      {error && (
+        <div>
+          <h2>An error occurred:</h2>
+          <p>{error}</p>
+        </div>
+      )}
       {matchedAgents.length > 0 && (
         <div>
           <h2>Matched Agents:</h2>
