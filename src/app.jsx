@@ -13,10 +13,23 @@ function App() {
 
   // On component mount, get questions, and check if answered
   useEffect(() => {
-    setQuestions(QuestionService.getQuestions());
+    // replicate a network call - diff pattern than agentService given its doesnt return a promise
+    // perhaps return a promise like agentService - to be consistent?
+    // did this so jest tests would pass (await waitFor())
+    const fetchQuestions = async () => {
+      try {
+        const fetchedQuestions = await QuestionService.getQuestions();
+        setQuestions(fetchedQuestions);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+    fetchQuestions();
+
     const allQuestionsAnswered = questions.every(
       (question) => answers[question.id]
     );
+
     setIsValid(allQuestionsAnswered);
   }, [answers, questions]);
 
@@ -33,6 +46,7 @@ function App() {
     const attributePreference = answers[2] && answers[2].attr;
 
     setIsLoading(true);
+    // returns a promise
     AgentService.findAgents(sizePreference, attributePreference)
       .then((matched) => {
         setMatchedAgents(matched);
@@ -66,8 +80,11 @@ function App() {
           ))}
         </div>
       ))}
-      <hr />
-      {!isValid && <p>Please answer questions before proceeding.</p>}
+      <p>
+        {!isValid && (
+          <span>Please answer above questions before proceeding.</span>
+        )}
+      </p>
       <button
         type="button"
         onClick={handleMatch}
