@@ -1,4 +1,4 @@
-# Local Agent Finder - Coding Exercise
+Coding Exercise/Proposal
 
 Welcome to our coding exercise! This test is designed to understand your thought process, problem-solving approach, and ability to provide improvement recommendations. We view this exercise as a way for you to express your technical and creative skills.
 
@@ -25,7 +25,7 @@ Feel free to summarize your thoughts or even provide your own diagram. You can p
 
 We're eager to see your unique perspective on potential improvements. Good luck, and we look forward to reviewing your exercise!
 
-# Notes
+# Submission Notes
 
 1. Added source mapping to enable debugging
 2. Added to Linting to help start re-factoring
@@ -53,11 +53,12 @@ We're eager to see your unique perspective on potential improvements. Good luck,
 8. Multi select 'preferences'
    1. Checkbox List
 9. State management
-10. Redux?
-11. Styling
+   1.  Redux
+   2.  Context/ContextAPI
+10. Styling
     1. CSS Tailwind
-12. Testing
+11. Testing
     1. Unit
     2. Integration
     3. e2e
-13. Warning: ReactDOM.render is no longer supported in React 18.
+note: thoughts/ideas are not necessarily in specific order 
